@@ -15,4 +15,6 @@ docker-compose.yml
 ### cmd commands
 docker build .
 docker-compose up
+docker-compose up -d -->(detach)
+docker-compose exec [service for python cmds]
 
