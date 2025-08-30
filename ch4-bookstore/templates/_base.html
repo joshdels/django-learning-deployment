@@ -23,28 +23,33 @@
         aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
+
+      <div class="collapse navbar-collapse" id="navbarCollapse">
+        <ul class="navbar-nav mb-2 mb-md-0">
+          <li class="nav-item">
+            <a href="{% url 'about' %}" class="nav-link">About</a>
+          </li>
+          {% if user.is_authenticated %}
+          <li class="nav-item">
+            <!-- Logout form inside nav-item -->
+            <form action="{% url 'account_logout' %}" method="post" class="d-inline">
+              {% csrf_token %}
+              <button type="submit"  class="nav-link text-nowrap">Logout</button>
+            </form>
+          </li>
+          {% else %}
+          <li class="nav-item">
+            <a href="{% url 'account_login' %}" class="nav-link text-nowrap">Log In</a>
+          </li>
+          <li class="nav-item">
+            <a href="{% url 'account_signup' %}" class="nav-link text-nowrap">Sign Up</a>
+          </li>
+          {% endif %}
+        </ul>
+      </div>
     </div>
 
-    <div class="collapse navbar-collapse" id="navbarCollapse">
-      <ul class="navbar-nav me-auto mb-2 mb-md-0">
-        {% if user.is_authenticated %}
-        <li class="nav-item">
-          <!-- Logout form inside nav-item -->
-          <form action="{% url 'logout' %}" method="post" class="d-inline">
-            {% csrf_token %}
-            <button type="submit" class="btn btn-outline-light btn-sm">Logout</button>
-          </form>
-        </li>
-        {% else %}
-        <li class="nav-item">
-          <a href="{% url 'login' %}" class="btn btn-outline-light btn-sm me-2">LogIn</a>
-        </li>
-        <li class="nav-item">
-          <a href="{% url 'signup' %}" class="btn btn-outline-light btn-sm">SignUp</a>
-        </li>
-        {% endif %}
-      </ul>
-    </div>
+
   </nav>
 
   <div class="container">
