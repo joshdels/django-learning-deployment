@@ -6,7 +6,8 @@ services:
     working_dir: /app
     volumes:
       - ./ch4-bookstore:/app
-    command: python manage.py runserver 0.0.0.0:8000
+    # command: python manage.py runserver 0.0.0.0:8000
+    command: gunicorn django_project.wsgi -b 0.0.0.0:8000
     ports:
       - "8000:8000"
     depends_on:
@@ -15,6 +16,11 @@ services:
       - "DJANGO_SECRET_KEY=django-insecure-(l1a4)2!je_)1+nw@3618--&+##u6=vk=bk1yww_2ubhat6gkd"
       - "DJANGO_DEBUG=True"
       - "DJANGO_SECURE_SSL_REDIRECT=False"
+      - "DJANGO_SECURE_HSTS_SECONDS=0" 
+      - "DJANGO_SECURE_HSTS_INCLUDE_SUBDOMAINS=False" 
+      - "DJANGO_SECURE_HSTS_PRELOAD=False" 
+      - "DJANGO_SESSION_COOKIE_SECURE=False" 
+      - "DJANGO_CSRF_COOKIE_SECURE=False" 
   db:
     image: postgres:17
     volumes:
