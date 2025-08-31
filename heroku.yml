@@ -1,13 +1,13 @@
 setup:
   addons:
-  - plan: heroku-postgresql
+    - plan: heroku-postgresql  # Add Postgres database
+
 build:
   docker:
-    web: Dockerfile
+    web: Dockerfile             # Build web image using Dockerfile
+
 release:
-  image: web
-  command: 
-    python manage.py collectstatic --noinput
+  command: python manage.py collectstatic --noinput  # Collect static files
+
 run:
-  web: gunicorn django_project.wsgi
-a
+  web: gunicorn django_project.wsgi:application     # Start Gunicorn with WSGI
