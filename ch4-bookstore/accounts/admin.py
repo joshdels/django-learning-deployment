@@ -16,4 +16,11 @@ class CustomUserAdmin(UserAdmin):
         "is_superuser"
     ]
     
+    add_fieldsets = (
+        (None, {
+            'classes': ('wide',),
+            'fields': ('username', 'email', 'password1', 'password2', 'is_superuser', 'is_staff'),
+        }),
+    )
+    
 admin.site.register(CustomUser, CustomUserAdmin)
