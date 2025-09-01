@@ -42,19 +42,15 @@ docker-compose build --no-cache
 4. Deployment
 5. Local Development (file: docker-compose.yml) / Productio (file: docker-compose-prod.yml)n --> all controlled in the docker 
 
-### deploying for heroku (note must create account first)
-heroku login
-- setup
-- build
-- release 
-- run
-heroku create
-add Django Secret KEY
-heroku stack:set container -a cryptic-shore-97883
-heroku addons:create --> for adding services/tier level
-heroku git:remote -a cryptic-shore-97883
-git push heroku main
-# add
-'''if it  ask for credentials, type this'''
-email - heroku email
-pass - (heroku auth:token)
+### deploying for vultr
+ssh root@IP address
+password
+--
+#### installing Docker
+sudo apt update && sudo apt upgrade -y
+sudo apt install -y docker.io
+sudo apt install -y docker-compose
+sudo systemctl enable docker
+sudo systemctl start docker
+docker --version
+docker-compose --version
