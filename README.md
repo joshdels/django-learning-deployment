@@ -50,7 +50,32 @@ password
 sudo apt update && sudo apt upgrade -y
 sudo apt install -y docker.io
 sudo apt install -y docker-compose
-sudo systemctl enable docker
+sudo systemctl enable docker --> running 24/7
 sudo systemctl start docker
 docker --version
 docker-compose --version
+
+#### Running a VPS
+- for running using git uploads
+apt update && apt install -y git --> git for cloning
+git clone https://github.com/USERNAME/REPO_NAME.git /root/myapp
+cd /root/myapp
+docker-compose up -d
+- for running locally pc
+scp -r ./myapp root@YOUR_SERVER_IP:/root/myapp
+
+#### adding production keys to VULTR
+cd /root/myapp
+nano docker-compose.prod.yml --> access GUI for copy/paste
+Cntrl 0, Enter, cntrl X to save the file and x for exit :)
+docker-compose -f docker-compose.prod.yml up -d
+
+#### adding GUI (optional)
+Web-Base File Manager
+sudo apt install cockpit -y
+sudo systemctl enable --now cockpit
+https://YOUR_SERVER_IP:9090
+---
+sudo systemctl start cockpit
+systemctl status cockpit
+sudo systemctl enable cockpit
