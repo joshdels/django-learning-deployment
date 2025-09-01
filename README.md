@@ -79,3 +79,8 @@ https://YOUR_SERVER_IP:9090
 sudo systemctl start cockpit
 systemctl status cockpit
 sudo systemctl enable cockpit
+
+# Security add SSL
+sudo apt update
+sudo apt install nginx
+sudo apt install certbot python3-certbot-nginx
