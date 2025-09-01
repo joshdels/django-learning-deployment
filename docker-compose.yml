@@ -13,7 +13,7 @@ services:
       - db
     environment:
       - "DJANGO_SECRET_KEY=django-insecure-(l1a4)2!je_)1+nw@3618--&+##u6=vk=bk1yww_2ubhat6gkd"
-      - "DATABASE_URL=postgres://myuser:mypassword@db:5432/mydb"
+      - "DATABASE_URL=postgres://postgres:mypassword@db:5432/mydb"
       - "DJANGO_DEBUG=True"
       - "DJANGO_SECURE_SSL_REDIRECT=False"
       - "DJANGO_SECURE_HSTS_SECONDS=0" 

@@ -1,86 +1,107 @@
 # django-learning-deployment
-this is a practice django practices for deployment
-how do you learn 
-    1. from shortcuts (memorize)
-    2. from official docs
-    3. from source code 
 
-__
-### installation of docker
-1. install unbuntu
-2. configure wsl2 virtually using bios
-3. open docker desktop
+Practice repository for deploying Django applications using Docker.
 
-### Use of Docker
-Dockerfile 
-docker-compose.yml
-.dockerignore 
+## How I Learn
+1. Shortcuts – memorize commands and workflows.
+2. Official documentation – reference Django, Docker, etc.
+3. Source code – explore for deeper understanding.
 
-### cmd commands for docker
+---
+
+## Docker Setup
+
+**Installation:**
+1. Install Ubuntu.
+2. Configure WSL2 (if using Windows).
+3. Open Docker Desktop.
+
+**Key Files:**
+- Dockerfile – defines Docker image.
+- docker-compose.yml – manages containers.
+- .dockerignore – excludes files from build.
+
+**Common Commands:**
 docker build .
 docker-compose up
-docker-compose up -d -->(detach)
-docker-compose exec [service for python cmds]
-docker-compose down --> stop server
-docker-compose 
+docker-compose up -d       # Detached mode
+docker-compose exec [service] [command]
+docker-compose down
+docker-compose
 
-### Security
-docker-compose exec web python -c "import secrets; print(secrets.token_urlsafe(38))" --> for production yml
+**Security:**
+docker-compose exec web python -c "import secrets; print(secrets.token_urlsafe(38))"
 docker-compose exec web python manage.py check --deploy
 
-
-### removing images clearly
-docker-compose down --rmi all --> removes all 
-docker system prune -f --> deletes images
+**Remove Images:**
+docker system prune -f
 docker-compose build --no-cache
 
 ---
-## Notes
-1. AbstractUser (Little since added already)vs. AbstractBaseUser (Full Manual)
-2. Collectstatic for production ready => STATIC_ROOT, STATICFILES_DIR, STATIC_STORAGE
-3. allauths
-4. Deployment
-5. Local Development (file: docker-compose.yml) / Productio (file: docker-compose-prod.yml)n --> all controlled in the docker 
 
-### deploying for vultr
-ssh root@IP address
-password
---
-#### installing Docker
+## Django Notes
+1. User Models:
+   - AbstractUser – minimal customization
+   - AbstractBaseUser – full manual setup
+2. Static Files: collectstatic for production (STATIC_ROOT, STATICFILES_DIRS)
+3. Use django-allauth for authentication
+4. Deployment workflow:
+   - Local: docker-compose.yml
+   - Production: docker-compose.prod.yml
+
+---
+
+## Deploying to Vultr VPS
+
+**SSH to Server:**
+ssh root@YOUR_SERVER_IP
+
+**Install Docker:**
 sudo apt update && sudo apt upgrade -y
-sudo apt install -y docker.io
-sudo apt install -y docker-compose
-sudo systemctl enable docker --> running 24/7
+sudo apt install -y docker.io docker-compose
+sudo systemctl enable docker
 sudo systemctl start docker
 docker --version
 docker-compose --version
 
-#### Running a VPS
-- for running using git uploads
-apt update && apt install -y git --> git for cloning
+**Run Django App:**
+
+*From Git:*
+sudo apt install -y git
 git clone https://github.com/USERNAME/REPO_NAME.git /root/myapp
 cd /root/myapp
 docker-compose up -d
-- for running locally pc
+
+*From Local Machine:*
 scp -r ./myapp root@YOUR_SERVER_IP:/root/myapp
 
-#### adding production keys to VULTR
+**Add Production Keys:**
 cd /root/myapp
-nano docker-compose.prod.yml --> access GUI for copy/paste
-Cntrl 0, Enter, cntrl X to save the file and x for exit :)
+nano docker-compose.prod.yml
 docker-compose -f docker-compose.prod.yml up -d
 
-#### adding GUI (optional)
-Web-Base File Manager
+---
+
+## Optional Web-Based GUI
 sudo apt install cockpit -y
 sudo systemctl enable --now cockpit
-https://YOUR_SERVER_IP:9090
----
-sudo systemctl start cockpit
-systemctl status cockpit
-sudo systemctl enable cockpit
+# Access via: https://YOUR_SERVER_IP:9090
 
-# Security add SSL
+---
+## Connecting your Domain to your Server 
+**Domain** 
+Add your server IP 
+
+**Server Setup 1. Add SSL with** 
 sudo apt update
 sudo apt install nginx
 sudo apt install certbot python3-certbot-nginx
+
+**Open Ports**
+ping topmapsolutions.com (should redirect to your server ip)
+sudo ufw allow 80
+sudo ufw allow 443
+sudo ufw reload
+sudo ufw status
+sudo certbot --nginx -d topmapsolutions.com -d www.topmapsolutions.com
+docker-compose up --build
